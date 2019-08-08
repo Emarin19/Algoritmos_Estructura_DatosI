@@ -2,14 +2,13 @@
 package arraylistexamples;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.lang.IllegalStateException;
 import java.util.ArrayList;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class ArrayListExamples {
 
@@ -38,6 +37,10 @@ public class ArrayListExamples {
         intList.add(869);
         intList.add(78);
         
+        //Ordenar la lista de forma ascendente
+        System.out.println("Lista ordenada de manera descendente");
+        Collections.sort(intList);
+        
         //For
         System.out.println("For");
         for (int i=0; i<intList.size(); i++){
@@ -50,11 +53,22 @@ public class ArrayListExamples {
             System.out.println(i);
         }
         
+        ArrayList<Integer> intList2 = new ArrayList<>();
+        intList2.add(14);
+        intList2.add(25);
+        intList2.add(-10);
+        intList2.add(869);
+        intList2.add(78);
+        
+        //Ordenar la lista de forma descendente
+        System.out.println("Lista ordenada de manera descendente");
+        Collections.sort(intList2,Collections.reverseOrder());
+        
         //While 
         System.out.println("While");
         int counter = 0;
-        while (intList.size()>counter){
-            System.out.println(intList.get(counter));
+        while (intList2.size()>counter){
+            System.out.println(intList2.get(counter));
             counter++;
         }
         
@@ -71,18 +85,32 @@ public class ArrayListExamples {
         ArrayList<Person> peopleData = new ArrayList<>();
         peopleData.add(new Person("Emanuel","Marin",19));
         peopleData.add(new Person("Cinthya","Aguilar",18));
+        peopleData.add(new Person("Maria","Fernandez",24));
+        
         for (Person datas: peopleData){
             System.out.println(datas.getInformation());
         }
         
+        System.out.println("\n");
+        System.out.println("Ordenar la lista peopleData de acuerdo al orden alfabetico de los nombres");
+        Collections.sort(peopleData, Person.nameComparator);
+        for (Person datas: peopleData){
+            System.out.println(datas);
+        }
         
+        System.out.println("\n");
+        System.out.println("Ordenar la lista peopleData de acuerdo al orden alfabetico de los apellidos");
+        int counter2 = 0;
+        while(peopleData.size()>counter){
+            System.out.println(peopleData.get(counter);
+            counter++;
+        } 
     }
     public static ArrayList<String> getLectura() throws Exception{
         
         String filePath = "C:\\Users\\Emanuel\\Desktop\\myfile2.csv";
         BufferedReader br;
         ArrayList<String> Result = new ArrayList<>();
-        //Result = null;
         try{
             br = new BufferedReader(new FileReader(filePath));
             String Row;
@@ -137,6 +165,52 @@ class Person{
     
     public String getInformation(){
         return Name + ", " + lastName + ", " + Age;
+    }
+    
+    public static Comparator<Person> nameComparator = new Comparator<Person>(){
+        
+        public int compare(Person name1, Person name2){
+            
+            String Name1 = name1.getName().toUpperCase();
+            String Name2 = name2.getName().toUpperCase();
+            
+            //Ordenar en forma ascendente
+            return Name1.compareTo(Name2);
+            
+            //Ordenar en forma descendente
+            // return Name2.compareTo(Name1);
+             
+        }
+        
+    };
+    
+    public static Comparator<Person> lastNameComparator = new Comparator<Person>(){
+            
+        public int compare(Person lastName1, Person lastName2){
+            
+            String LastName1 = lastName1.getlastName().toUpperCase();
+            String LastName2 = lastName2.getlastName().toUpperCase();
+            
+            //Forma ascendente
+            return LastName1.compareTo(LastName2);
+        }   
+    };
+    
+    public static Comparator<Person> ageComparator = new Comparator<Person>(){
+    
+         public int compare(Person age1, Person age2){
+            
+            int Age1 = age1.getAge();
+            int Age2 = age2.getAge();
+            
+            //Forma ascendente
+            return Age1-Age2;
+        }
+    };
+    
+    @Override
+    public String toString(){
+        return "[Name: " + Name + " Last Name: " + lastName + " Age: " + Age;
     }
     
 }
