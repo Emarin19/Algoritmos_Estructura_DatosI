@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="SigIn_ExampleCSS.jnlp">
+  <information>
+    <title>SigIn_ExampleCSS</title>
+    <vendor>Emanuel</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="SigIn_ExampleCSS.jar" size="2131" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SigIn_ExampleCSS" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="sigin_examplecss.SigIn_ExampleCSS"  name="SigIn_ExampleCSS" />
+  <update check="always"/>
+</jnlp>
