@@ -3,19 +3,19 @@ package tarea1_datos_tableview;
 
 // JavaFX packages
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 // Java packages
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,15 +25,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 //Clase principal
-//Probando que funciona la integracion de NetBeans con GitHub
-//Haciendo mas pruebas
 public class Tarea1_Datos_TableView extends Application {
     
     //Variables de clase
     private static Stage window;
     private static int N_COLUMS = 0;
     private static int N_ROWS = 0;
-    private static String Filepath;
     private static String DataString = "";
     
     @Override
@@ -42,24 +39,14 @@ public class Tarea1_Datos_TableView extends Application {
         window = stage;
         
         //Busqueda de archivo .csv
-        try{
-            fileSearch();
-            System.out.println("Archivo seleccionado");
-            System.out.println("Archivo seleccionado");
-            System.out.println("Archivo seleccionado");
-            System.out.println("Archivo seleccionado");
-            System.out.println("Archivo seleccionado");
-            System.out.println("Haciendo pruebas");
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Archivo seleccionado invalido");
-        }
-
+        String filePath = fileSearch();
+        
         //Se verifica que el archivo seleccionado sea del formato .csv
-        if (Filepath.endsWith(".csv")){
+        if (filePath.endsWith(".csv")){
             
             //Se instancia un objeto a la clase interna csvReader para definir el delimitador permitido y cargar el número de filas
             //y columnas del archivo seleccionado.
-            csvReader Filereading = new csvReader(",");
+            csvReader Filereading = new csvReader(",", filePath);
             Filereading.MRows_Colums();
             
             //Se instancia un onjeto a la clase interna TableCreation para crear las filas y columnas y agregar los datos
@@ -112,16 +99,20 @@ public class Tarea1_Datos_TableView extends Application {
         launch(args);
     }
     
-    public static void fileSearch() throws Exception{
+    public static String fileSearch() throws Exception {
         
+        String filePath = "";
         FileChooser fileChooser = new FileChooser();
         File csvFile = fileChooser.showOpenDialog(window);
-        Filepath = csvFile.getAbsolutePath();
-        System.out.println(Filepath);
-        
+        filePath = csvFile.getAbsolutePath();
+        if ("".equals(filePath)){
+            throw new Exception("Error en la lectura del archivo");
+        }
+        else{
+            return filePath;
+        }
     }
-    
-    
+     
     
     //Clase interna para determinar del archivo .csv, la cantidad de filas y columnas
     //que este contendrá, además crea un String que concatena todas las filas del archivo
@@ -129,14 +120,15 @@ public class Tarea1_Datos_TableView extends Application {
     //la instanciación de la clase.
     private static class csvReader extends Exception {
         
-        private final String File = Filepath;
+        private final String File;
         private final String Delimiter;
         
-        public csvReader(String Delimiter){
+        public csvReader(String Delimiter, String File){
             this.Delimiter = Delimiter;
+            this.File = File;
         }
         
-        public String MRows_Colums() throws FileNotFoundException, IOException{
+        public String MRows_Colums() throws FileNotFoundException, IOException, Exception{
             BufferedReader br;
             int countRows = 0;
             int countColums = 0;
@@ -146,6 +138,9 @@ public class Tarea1_Datos_TableView extends Application {
             //con el fin de verificar que el archivo cumple o no con el estandar .csv
             String FirstLine;
             FirstLine = br.readLine();
+            if (FirstLine == null || "".equals(FirstLine)){
+                throw new Exception("Archivo vacia");
+            }
             
             String[] FirstColum = FirstLine.split(Delimiter, -1);
             
