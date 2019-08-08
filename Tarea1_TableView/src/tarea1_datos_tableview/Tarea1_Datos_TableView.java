@@ -40,6 +40,7 @@ public class Tarea1_Datos_TableView extends Application {
         
         //Busqueda de archivo .csv
         String filePath = fileSearch();
+        System.out.println("Hey");
         
         //Se verifica que el archivo seleccionado sea del formato .csv
         if (filePath.endsWith(".csv")){
