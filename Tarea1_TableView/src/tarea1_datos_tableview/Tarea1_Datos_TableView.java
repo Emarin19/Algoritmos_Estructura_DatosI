@@ -26,6 +26,7 @@ import java.io.IOException;
 
 //Clase principal
 //Probando que funciona la integracion de NetBeans con GitHub
+//Haciendo mas pruebas
 public class Tarea1_Datos_TableView extends Application {
     
     //Variables de clase
@@ -48,6 +49,7 @@ public class Tarea1_Datos_TableView extends Application {
             System.out.println("Archivo seleccionado");
             System.out.println("Archivo seleccionado");
             System.out.println("Archivo seleccionado");
+            System.out.println("Haciendo pruebas");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "Archivo seleccionado invalido");
         }
