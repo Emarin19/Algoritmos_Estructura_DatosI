@@ -1,33 +1,33 @@
 
 package tableviewhomework;
 
+//Same project
 import excepciones.ArchivoVacio;
 import excepciones.ExtensionCSV;
 import excepciones.FormatoCSV;
-import tableviewhomework.csvReader;
-import tableviewhomework.TableCreation;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+
+//JavaFX package
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 
+//Java package
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class FXMLDocumentController implements Initializable {
     Window window;
@@ -35,13 +35,6 @@ public class FXMLDocumentController implements Initializable {
     private ArrayList<String>fileDatas;
     TableView<ObservableList<String>> tableView = new TableView<>();
 
-    public FXMLDocumentController() {
-        this.label = new Label();
-    }
-    
-    @FXML
-    private Label label;
-    
     @FXML
     private HBox tableVision;
     

@@ -8,6 +8,7 @@ public class ArchivoVacio extends Exception {
         this.message = message;
     }
     
+    @Override
     public String getMessage(){
         return message;
     }    
