@@ -100,11 +100,19 @@ public class ArrayListExamples {
         
         System.out.println("\n");
         System.out.println("Ordenar la lista peopleData de acuerdo al orden alfabetico de los apellidos");
+        Collections.sort(peopleData, Person.lastNameComparator);
         int counter2 = 0;
-        while(peopleData.size()>counter){
-            System.out.println(peopleData.get(counter);
-            counter++;
-        } 
+        while(peopleData.size()>counter2){
+            System.out.println(peopleData.get(counter2));
+            counter2++;
+        }
+        
+        System.out.println("\n");
+        System.out.println("Ordenar la lista peopleData de acuerdo a la edad en orden ascendente");
+        Collections.sort(peopleData, Person.ageComparator);
+        for (int i=0; i<peopleData.size(); i++){
+            System.out.println(peopleData.get(i));
+        }
     }
     public static ArrayList<String> getLectura() throws Exception{
         

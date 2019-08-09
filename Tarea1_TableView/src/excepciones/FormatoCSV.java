@@ -2,7 +2,7 @@
 package excepciones;
 
 
-public class FormatoCSV extends Exception{
+public class FormatoCSV extends Exception {
     private String message = "Archivo no cumple con el formato .csv";
             
     public void setMessage(String message){
