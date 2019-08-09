@@ -1,6 +1,9 @@
 
 package tarea1_datos_tableview;
 
+import excepciones.ArchivoVacio;
+import excepciones.FormatoCSV;
+
 // JavaFX packages
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,6 +26,9 @@ import javax.swing.JOptionPane;
 // Exception packages
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 
 //Clase principal
 public class Tarea1_Datos_TableView extends Application {
@@ -32,23 +38,38 @@ public class Tarea1_Datos_TableView extends Application {
     private static int N_COLUMS = 0;
     private static int N_ROWS = 0;
     private static String DataString = "";
+    private static String filePath;
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception{
         
         window = stage;
         
         //Busqueda de archivo .csv
-        String filePath = fileSearch();
-        System.out.println("Hey");
+        try{
+        filePath = fileSearch();
+        } catch (NullPointerException exception){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Archivo no seleccionado");
+            alert.showAndWait();
+        }
+   
         
         //Se verifica que el archivo seleccionado sea del formato .csv
         if (filePath.endsWith(".csv")){
             
             //Se instancia un objeto a la clase interna csvReader para definir el delimitador permitido y cargar el número de filas
             //y columnas del archivo seleccionado.
-            csvReader Filereading = new csvReader(",", filePath);
-            Filereading.MRows_Colums();
+            csvReader fileReading = new csvReader(",", filePath);
+            try{
+                fileReading.MRows_Colums();
+            }catch(ArchivoVacio exception){
+                Alert alert = new Alert(AlertType.ERROR, exception.getMessage());
+                alert.showAndWait();  
+            }catch(FormatoCSV exception){
+                Alert alert = new Alert(AlertType.ERROR, exception.getMessage());
+                alert.showAndWait();
+            }
             
             //Se instancia un onjeto a la clase interna TableCreation para crear las filas y columnas y agregar los datos
             //correspondiente a cada celda creada.
@@ -89,10 +110,9 @@ public class Tarea1_Datos_TableView extends Application {
         }
         
         else{
-            
-            JOptionPane.showMessageDialog(null, "Has seleccionado un archivo incorrecto");
-            System.exit(0);
-         
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Has seleccionado un archivo incorrecto");
+            alert.showAndWait();
         }
     }
 
@@ -100,14 +120,14 @@ public class Tarea1_Datos_TableView extends Application {
         launch(args);
     }
     
-    public static String fileSearch() throws Exception {
+    public static String fileSearch() throws NullPointerException {
         
-        String filePath = "";
+        String filePath;
         FileChooser fileChooser = new FileChooser();
         File csvFile = fileChooser.showOpenDialog(window);
         filePath = csvFile.getAbsolutePath();
-        if ("".equals(filePath)){
-            throw new Exception("Error en la lectura del archivo");
+        if (filePath == null){
+            throw new NullPointerException();
         }
         else{
             return filePath;
@@ -129,22 +149,20 @@ public class Tarea1_Datos_TableView extends Application {
             this.File = File;
         }
         
-        public String MRows_Colums() throws FileNotFoundException, IOException, Exception{
+        public String MRows_Colums() throws  FormatoCSV, ArchivoVacio, FileNotFoundException, IOException{
             BufferedReader br;
             int countRows = 0;
             int countColums = 0;
             
-            br = new BufferedReader(new FileReader(File));
+            
             //Lectura de la primer fia del archivo para determinar el número de columnas que deben contener todas las demás
             //con el fin de verificar que el archivo cumple o no con el estandar .csv
-            String FirstLine;
-            FirstLine = br.readLine();
-            if (FirstLine == null || "".equals(FirstLine)){
-                throw new Exception("Archivo vacia");
+            br = new BufferedReader(new FileReader(File));
+            String FirstLine = br.readLine();
+            if ("".equals(FirstLine)){
+                throw new ArchivoVacio();
             }
-            
             String[] FirstColum = FirstLine.split(Delimiter, -1);
-            
             
             //Con la lectura completa de todo el archivo seleccionado, se determinan la cantidad de filas y columnas 
             //y se crea un solo String que contendrá todo el archivo en una sola línea.
@@ -158,21 +176,19 @@ public class Tarea1_Datos_TableView extends Application {
                     countColums = Colums.length;
                     
                     if (countColums != FirstColum.length){
-                        JOptionPane.showMessageDialog(null, "Archivo no cumple con el formato .csv");
-                        System.exit(0);
-                    } 
+                        throw new FormatoCSV();
+                    }
                 }
             }catch (FileNotFoundException ex){
                 JOptionPane.showMessageDialog(null, "Archivo no encontrado");
             }catch (IOException ex){
                 JOptionPane.showMessageDialog(null, "Archivo invalido");
             }
-            
+
             N_ROWS = countRows - 1;
             N_COLUMS = countColums;
             return DataString;
         }
-        
     }
     
     //Clase interna que toma el String creado en la clase csvReader y separa todas las palabras del string de acuerdo
