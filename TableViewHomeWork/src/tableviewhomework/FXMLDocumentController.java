@@ -39,20 +39,21 @@ public class FXMLDocumentController implements Initializable {
     private HBox tableVision;
     
     @FXML
-    public void setFile(ActionEvent event) throws IOException {
+    public void setFile(ActionEvent event) throws IOException, Exception {
         
         tableVision.getChildren().clear();
         
         try{
             filePath = fileSearch();
-            //System.out.println(filePath);
         }catch (NullPointerException exception){
             exception.getMessage();
             Alert alert = new Alert(AlertType.ERROR, "Archivo no seleccionado");
             alert.showAndWait();
+            System.exit(0);
         }catch (ExtensionCSV exception){
             Alert alert = new Alert(AlertType.ERROR, exception.getMessage());
             alert.showAndWait();
+            System.exit(0);
         }
         
         csvReader fileReading = new csvReader(",", filePath);
@@ -97,49 +98,34 @@ public class FXMLDocumentController implements Initializable {
         }
         
         finalTable();
-                
-        
-        
-        //tableView.toFront();
-        //tableView.visibleProperty();
-        
-        System.out.println(fileDatas.get(0));
-        System.out.println(fileDatas.get(1));
-        System.out.println(fileDatas.get(2));
-        
-
     }
     
-    public String fileSearch()throws NullPointerException, ExtensionCSV{
+    public String fileSearch()throws NullPointerException, ExtensionCSV, Exception{
         
-        String filePath;
+        String filePathS;
         FileChooser fileChooser = new FileChooser();
         File csvFile = fileChooser.showOpenDialog(window);
-        filePath = csvFile.getAbsolutePath();
-        if (filePath == null){
+        
+        filePathS = csvFile.getAbsolutePath();
+        System.out.println("Filepath" + filePathS);
+        
+        if (filePathS == null){
             throw new NullPointerException();
+            
         }
-        else if ((filePath.endsWith(".csv"))==false){
+        else if ((filePathS.endsWith(".csv"))==false){
             throw new ExtensionCSV();
         }
         else{
-            return filePath;
+            return filePathS;
         }
         
     }
     
     public void finalTable(){
-        
         tableVision.getChildren().addAll(tableView);
     }
     
-    
-    /*@FXML 
-    HBox tableVision;
-    tableVision.getChildren().add(label);*/
-    
-    
-  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
