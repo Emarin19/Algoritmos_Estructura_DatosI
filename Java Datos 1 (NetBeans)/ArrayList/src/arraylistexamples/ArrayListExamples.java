@@ -4,7 +4,6 @@ package arraylistexamples;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.IllegalStateException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -218,7 +217,7 @@ class Person{
     
     @Override
     public String toString(){
-        return "[Name: " + Name + " Last Name: " + lastName + " Age: " + Age;
+        return "[Name: " + Name + " Last Name: " + lastName + " Age: " + Age + "]";
     }
     
 }
