@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class ArrayListExamples {
@@ -81,7 +82,7 @@ public class ArrayListExamples {
         }
         
         System.out.println("Intanciacion de un objeto Person a un ArrayList");
-        ArrayList<Person> peopleData = new ArrayList<>();
+        List<Person> peopleData = new ArrayList<>();
         peopleData.add(new Person("Emanuel","Marin",19));
         peopleData.add(new Person("Cinthya","Aguilar",18));
         peopleData.add(new Person("Maria","Fernandez",24));
@@ -204,7 +205,7 @@ class Person{
     };
     
     public static Comparator<Person> ageComparator = new Comparator<Person>(){
-    
+         @Override
          public int compare(Person age1, Person age2){
             
             int Age1 = age1.getAge();
