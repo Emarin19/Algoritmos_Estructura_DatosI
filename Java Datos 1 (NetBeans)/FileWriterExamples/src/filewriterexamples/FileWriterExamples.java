@@ -16,11 +16,11 @@ public class FileWriterExamples {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         try{
-            fileWriter = new FileWriter("C:\\Users\\Emanuel\\Desktop\\FirstFile.txt");
-            fileWriter.write("Amanda");
-            fileWriter.write("\nEmanuel");
-            fileWriter.write("\nCinthya");
-            fileWriter.write("\nDiego");
+            fileWriter = new FileWriter("C:\\Users\\Emanuel\\Desktop\\FirstFile.txt",true);
+            fileWriter.write("12");
+            fileWriter.write("\n13");
+            fileWriter.write("\n14");
+            fileWriter.write("\n15");
             fileWriter.close();
         } catch(Exception e){
             System.out.println("MISTAKE");
