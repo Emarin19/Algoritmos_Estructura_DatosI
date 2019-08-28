@@ -24,7 +24,7 @@ class LinkedList {
         }
 
 	/* method to create a simple linked list with 3 nodes*/
-	public static void main(String[] args) 
+	/*public static void main(String[] args) 
 	{ 
 		/* Start with the empty list. */
 		LinkedList llist = new LinkedList(); 
@@ -67,6 +67,6 @@ class LinkedList {
 		+----+------+	 +----+------+	 +----+------+ 
 		| 1 | o-------->| 2 | o-------->| 3 | null | 
 		+----+------+	 +----+------+	 +----+------+ */
-	} 
+	}*/
 } 
 
