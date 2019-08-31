@@ -6,39 +6,72 @@
 package circuitdesigner;
 
 import com.jfoenix.controls.JFXButton;
-import com.sun.prism.paint.Color;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
+import com.jfoenix.controls.JFXCheckBox;
+import java.awt.Color;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import nodes.LogicGate;
+
 
 /**
  *
  * @author Emanuel
  */
-public class MainViewController implements Initializable {
+public class MainViewController extends AnchorPane implements Initializable {
+
+    
+    @FXML
+    private AnchorPane mainAnchorPane;
+
+    @FXML
+    private BorderPane borderpane;
+    
+    @FXML
+    private VBox rightpane;
+    
+    @FXML
+    private AnchorPane leftpane;
+    
+    @FXML
+    private CheckMenuItem gridOption;
+    
+    @FXML
+    private GridPane gridpane;
+    
+    @FXML
+    private JFXCheckBox checkboxGrid;
     
     @FXML
     private JFXButton newFileButton;
 
     @FXML
     private JFXButton openFileButton;
-    
+
     @FXML
     private JFXButton saveFileButton;
 
@@ -47,22 +80,25 @@ public class MainViewController implements Initializable {
 
     @FXML
     private JFXButton settingsButton;
-    
+
     @FXML
     private JFXButton helpButton;
-    
+
     @FXML
     private JFXButton exitButton;
     
     @FXML
     private JFXButton runButton;
+
+    @FXML
+    private JFXButton truetable;
     
     @FXML
     private ImageView newFileIcon;
 
     @FXML
     private ImageView openFileIcon;
-    
+
     @FXML
     private ImageView saveFileIcon;
 
@@ -71,30 +107,52 @@ public class MainViewController implements Initializable {
 
     @FXML
     private ImageView settingsIcon;
-    
+
     @FXML
     private ImageView helpIcon;
-    
+
     @FXML
     private ImageView exitIcon;
     
     @FXML
     private ImageView runIcon;
-
-    @FXML
-    private GridPane gridPane;
     
-    @FXML
-    private CheckBox checkboxGrid;
+    /*private DragGateController Gate = null;
     
-    @FXML
-    private CheckMenuItem gridOption;
+    private EventHandler gateDragOverRoot = null;
+    private EventHandler gateDragDropped = null;
+    private EventHandler gateDragOverLeftPane = null;*/
+    
 
+
+    void setStageAndSetupListeners(Stage stage) {
+        stage.setTitle("Circuit Designer");
+        Scene scene = new Scene(mainAnchorPane,1000,650);
+        borderpane.prefWidthProperty().bind(mainAnchorPane.widthProperty());
+        borderpane.prefHeightProperty().bind(mainAnchorPane.heightProperty());
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle resources) {
         buttons();
         gridDimensions();
         checkboxGrid.setSelected(true);
+        /*Gate = new DragGateController();
+        Gate.setVisible(true);
+        getChildren().add(Gate);
+        
+        for(int i=0; i<3; i++){
+            
+            DragGateController logic = new DragGateController();
+            logic.setType(DragGateType.values()[i]);
+            ImageView image = new ImageView(logic.getType().getImage());
+            AnchorPane base = new AnchorPane(image);
+            rightpane.getChildren().add(base);
+        }*/
+        
         
     }
     
@@ -148,12 +206,12 @@ public class MainViewController implements Initializable {
     void gridView(ActionEvent event) {
         if(gridOption.isSelected()){
             checkboxGrid.setSelected(true);
-            gridPane.setVisible(true);
+            gridpane.setVisible(true);
             System.out.println("Grid");
         }
         else{
             checkboxGrid.setSelected(false);
-            gridPane.setVisible(false);
+            gridpane.setVisible(false);
             System.out.println("No grid");
         }
     }
@@ -162,29 +220,27 @@ public class MainViewController implements Initializable {
     void checkboxGridAction(ActionEvent event) {
         if(checkboxGrid.isSelected()){
             gridOption.setSelected(true);
-            gridPane.setVisible(true);
+            gridpane.setVisible(true);
         }
         else{
             gridOption.setSelected(false);
-            gridPane.setVisible(false);
+            gridpane.setVisible(false);
         }
+    }
+    
+    @FXML
+    void runCircuit(ActionEvent event) {
+        System.out.println("Running circuit");
+    }
+    
+    @FXML
+    void generateTrueTable(ActionEvent event) {
+        System.out.println("True Table");
     }
     
     @FXML
     void about(ActionEvent event) {
         System.out.println("Aditional Information");
-    }
-
-    private void gridDimensions() {
-        for (int i = 0; i < 40; i++) {
-            RowConstraints row = new RowConstraints(20);
-            gridPane.getRowConstraints().add(row);
-        }
-        
-        for(int j=0; j<60; j++){
-            ColumnConstraints colum = new ColumnConstraints(20);
-            gridPane.getColumnConstraints().add(colum);   
-        }
     }
 
     private void buttons() {
@@ -197,5 +253,36 @@ public class MainViewController implements Initializable {
         helpButton.setGraphic(helpIcon);
         exitButton.setGraphic(exitIcon);
     }
-     
+
+    private void gridDimensions() {
+        for (int i = 0; i < 60; i++) {
+            RowConstraints row = new RowConstraints(20);
+            gridpane.getRowConstraints().add(row);
+        }
+        
+        for(int j=0; j<60; j++){
+            ColumnConstraints colum = new ColumnConstraints(20);
+            gridpane.getColumnConstraints().add(colum);   
+        }
+    }
+
+    @FXML
+    private void loadGates() {
+        /*DragGateController draggate = new DragGateController();
+        LogicGate logicGate;
+        for(int i=0; i<3; i++){
+            try{
+                AnchorPane base = new AnchorPane();
+                draggate.setType(DragGateType.values()[i]);
+                logicGate = draggate.getType();
+                ImageView logicGateImage = new ImageView(logicGate.getImage());
+                base.getChildren().add(logicGateImage);
+                rightpane.getChildren().add(base);   
+            } catch(Exception ex){
+                System.out.println("Error");
+            }
+        }*/
+
+    }
+   
 }

@@ -19,12 +19,11 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Circuit Designer");
-        Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
-        Scene scene = new Scene(root,800,600);
-        //stage.setResizable(true);
-        stage.setScene(scene);
-        stage.show();
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        Parent root = (Parent)loader.load();
+        MainViewController controller = (MainViewController)loader.getController();
+        controller.setStageAndSetupListeners(stage);
     }
 
     /**
