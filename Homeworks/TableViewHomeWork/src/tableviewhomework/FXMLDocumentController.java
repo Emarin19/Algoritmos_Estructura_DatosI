@@ -31,8 +31,8 @@ import java.util.ResourceBundle;
 
 public class FXMLDocumentController implements Initializable {
     Window window;
-    private String filePath;
-    private ArrayList<String>fileDatas;
+    //private String filePath;
+    private ArrayList<String>fileDatas = new ArrayList<>();
     TableView<ObservableList<String>> tableView = new TableView<>();
 
     @FXML
@@ -40,10 +40,11 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     public void setFile(ActionEvent event) throws IOException, Exception {
-        
+        System.out.println("Entre");
         tableVision.getChildren().clear();
         
-        try{
+        /*try{
+            //Ya tengo que archivo leer
             filePath = fileSearch();
         }catch (NullPointerException exception){
             exception.getMessage();
@@ -54,10 +55,11 @@ public class FXMLDocumentController implements Initializable {
             Alert alert = new Alert(AlertType.ERROR, exception.getMessage());
             alert.showAndWait();
             System.exit(0);
-        }
+        }*/
         
-        csvReader fileReading = new csvReader(",", filePath);
+        /*csvReader fileReading = new csvReader(",", filePath);
         try{
+            //fileDatas tendrá todos los elementos
             fileDatas = fileReading.MRows_Colums();
         }catch (FormatoCSV exception){
             Alert alert = new Alert(AlertType.ERROR, exception.getMessage());
@@ -65,12 +67,18 @@ public class FXMLDocumentController implements Initializable {
         }catch (ArchivoVacio exception){
             Alert alert = new Alert(AlertType.ERROR, exception.getMessage());
             alert.showAndWait();
-        }
+        }*/
         
         
         //Se instancia un objeto a la clase TableCreation para crear las filas y columnas y agregar los datos
         //correspondiente a cada celda creada.
+        
+        System.out.println(fileDatas.get(0));
+        System.out.println(fileDatas.get(1));
+        System.out.println(fileDatas.get(2));
+        
         TableCreation Table  = new TableCreation(fileDatas.get(0));
+        System.out.println(fileDatas.get(0));
         tableView = new TableView<>();
         
         //Se agregan las columnas a la Tabla
@@ -100,7 +108,7 @@ public class FXMLDocumentController implements Initializable {
         finalTable();
     }
     
-    public String fileSearch()throws NullPointerException, ExtensionCSV, Exception{
+    /*public String fileSearch()throws NullPointerException, ExtensionCSV, Exception{
         
         String filePathS;
         FileChooser fileChooser = new FileChooser();
@@ -120,7 +128,7 @@ public class FXMLDocumentController implements Initializable {
             return filePathS;
         }
         
-    }
+    }*/
     
     public void finalTable(){
         tableVision.getChildren().addAll(tableView);
@@ -128,7 +136,14 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println("Hola amigos");
+        fileDatas.add("I1,I2,0,0,0,1,1,0,1,1,");
+        System.out.println("1");
         
+        fileDatas.add("4");
+        System.out.println("2");
+        fileDatas.add("2");
+        System.out.println("3");
     }    
     
 }

@@ -33,6 +33,7 @@ public class csvReader extends Exception{
             if ("".equals(firstLine)){
                 throw new ArchivoVacio();
             }
+            //FirstColumn coontiene los nombres de las columnas
             String[] firstColum = firstLine.split(delimeter, -1);
             
             //Con la lectura completa de todo el archivo seleccionado, se determinan la cantidad de filas y columnas 
@@ -61,7 +62,9 @@ public class csvReader extends Exception{
             result.add(dataString);
             result.add(N_ROWS);
             result.add(N_COLUMS);
+            System.out.println(result);
             
+          //Devuelvo una lista con los nombres de las columnas y los valores de cada una de ellas
             return result; 
     }
 }

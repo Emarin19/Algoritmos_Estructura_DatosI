@@ -13,7 +13,7 @@ public class TableCreation {
         this.cells = dataString.split(",");
     }
     
-    List<String> getNext(int nWords){
+    public List<String> getNext(int nWords){
         List<String> Words = new ArrayList<>();
         for (int i = 0; i < nWords; i++){
             if (currentWord == Integer.MAX_VALUE){
@@ -23,6 +23,7 @@ public class TableCreation {
             Words.add(cells[currentWord % cells.length]);
             currentWord++;
         }
+        System.out.println("Words" + Words);
         return Words;
     }
     

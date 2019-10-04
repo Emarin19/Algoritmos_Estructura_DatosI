@@ -11,10 +11,20 @@ import javafx.collections.ObservableList;
 public class ObservableListExamples {
 
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        ObservableList<String> observableList = FXCollections.observableList(list);
+        List<String> ll = (List<String>) new LinkedList<String>();
+        ObservableList<String> observable = FXCollections.observableList(ll);
+        observable.addListener(new ListChangeListener(){
+            @Override
+            public void onChanged(ListChangeListener.Change c) {
+                System.out.println("Algo ha sido agregado");
+            }
+            
+        });
         
-        observableList.addListener(new ListChangeListener(){
+        //List<String> list = new ArrayList<>();
+        //ObservableList<String> observableList = FXCollections.observableList(list);
+        
+        /*observableList.addListener(new ListChangeListener(){
             
             @Override
             public void onChanged(ListChangeListener.Change change) {
@@ -25,9 +35,11 @@ public class ObservableListExamples {
                 }
             }
             
-        });
+        });*/
         
-        observableList.add("a: item one");
+        observable.add("Hola");
+        
+        /*observableList.add("a: item one");
         System.out.println("Size:" + observableList.size() + " " + observableList.toString());
         
         System.out.println("\n");
@@ -51,7 +63,7 @@ public class ObservableListExamples {
         
         System.out.println("\n");
         observableList.remove(list.size()-1);
-        System.out.println("Size:" + observableList.size() + " " + observableList.toString());
+        System.out.println("Size:" + observableList.size() + " " + observableList.toString());*/
         
     }
     
